@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="MaterialTheme" parent="ParentMaterialTheme"></style>
+
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/white</item> <!--Toolbar title -->
+        <item name="android:textColorSecondary">@color/white</item> <!-- Color Of overflow menu (3 dots) -->
+        <item name="android:elevation">5dp</item>
     </style>
+
 </resources>

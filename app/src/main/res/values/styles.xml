@@ -1,20 +1,39 @@
 <resources>
+    <style name="MaterialTheme" parent="ParentMaterialTheme"></style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="ParentMaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="colorControlActivated">@color/colorControlActivated</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/white</item> <!--Toolbar title -->
+        <item name="android:textColorSecondary">@color/white</item> <!-- Color Of overflow menu (3 dots) -->
+
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name ="ToolBarTitle" parent="ToolbarTheme">
+        <item name ="android:textSize">@dimen/material_typography_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name ="android:textColor">@color/white</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/grey_700</item><!--Text color of overflow menu -->
+        <item name="android:background">@color/white</item><!--Background of overflow menu -->
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/white</item><!--Text color of overflow menu -->
+    </style>
+
+
 
 </resources>
+

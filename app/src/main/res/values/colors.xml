@@ -1,6 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/red_700</color>
+    <color name="colorPrimaryDark">@color/red_800</color>
+    <color name="colorAccent">@color/deepblue_A400</color>
+    <color name="colorControlHighlight">@color/lightblue_A100</color>
+    <color name="colorButtonNormal">@color/teal_A700</color>
+    <color name="colorControlActivated">@color/teal_A200</color>
+
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+
+
+    <!-- 500 - For Primary color -->
+    <color name="red_500">#f44336</color>
+    <color name="pink_500">#e91e63</color>
+    <color name="purple_500">#9c27b0</color>
+    <color name="deepblue_500">#673ab7</color>
+    <color name="indigo_500">#3f51b5</color>
+    <color name="blue_500">#2196f3</color>
+    <color name="lightblue_500">#03a9f4</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="teal_500">#009688</color>
+    <color name="green_500">#4caf50</color>
+    <color name="lightgreen_500">#8bc34a</color>
+    <color name="lime_500">#cddc39</color>
+    <color name="yellow_500">#ffeb3b</color>
+    <color name="amber_500">#ffc107</color>
+    <color name="orange_500">#ff9800</color>
+    <color name="deeporange_500">#ff5722</color>
+    <color name="brown_500">#795548</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="bluegrey_500">#607d8b</color>
+
+
+
+    <!-- 700 - For Toolbar/Primary Dark Color -->
+    <color name="red_700">#d32f2f</color>
+    <color name="pink_700">#c2185b</color>
+    <color name="purple_700">#7b1fa2</color>
+    <color name="deepblue_700">#512da8</color>
+    <color name="indigo_700">#303f9f</color>
+    <color name="blue_700">#1976d2</color>
+    <color name="lightblue_700">#0288d1</color>
+    <color name="cyan_700">#0097a7</color>
+    <color name="teal_700">#00796b</color>
+    <color name="green_700">#388e3c</color>
+    <color name="lightgreen_700">#689f38</color>
+    <color name="lime_700">#afb42b</color>
+    <color name="yellow_700">#fbc02d</color>
+    <color name="amber_700">#ffa000</color>
+    <color name="orange_700">#f57c00</color>
+    <color name="deeporange_700">#e64a19</color>
+    <color name="brown_700">#5d4037</color>
+    <color name="grey_700">#616161</color>
+    <color name="bluegrey_700">#455a64</color>
+
+
+
+
+    <!--  800 - Primary Dark Color -->
+    <color name="red_800">#c62828</color>
+    <color name="pink_800">#ad1457</color>
+    <color name="purple_800">#6a1b9a</color>
+    <color name="deepblue_800">#4527a0</color>
+    <color name="indigo_800">#283593</color>
+    <color name="blue_800">#1565c0</color>
+    <color name="lightblue_800">#0277bd</color>
+    <color name="cyan_800">#00838f</color>
+    <color name="teal_800">#00695c</color>
+    <color name="green_800">#2e7d32</color>
+    <color name="lightgreen_800">#558b2f</color>
+    <color name="lime_800">#9e9d24</color>
+    <color name="yellow_800">#f9a825</color>
+    <color name="amber_800">#ff8f00</color>
+    <color name="orange_800">#ef6c00</color>
+    <color name="deeporange_800">#d84315</color>
+    <color name="brown_800">#4e342e</color>
+    <color name="grey_800">#424242</color>
+    <color name="bluegrey_800">#37474f</color>
+
+
+
+    <!-- Axxx- For Accent Color - Primary action button, Floating Action Buttons, Switches, accent web links-->
+    <color name="red_A100">#ff8a80</color>
+    <color name="red_A200">#ff5252</color>
+    <color name="red_A400">#ff1744</color>
+    <color name="red_A700">#d50000</color>
+
+    <color name="pink_A100">#ff80ab</color>
+    <color name="pink_A200">#ff4081</color>
+    <color name="pink_A400">#f50057</color>
+    <color name="pink_A700">#c51162</color>
+
+    <color name="purple_A100">#ea80fc</color>
+    <color name="purple_A200">#e040fb</color>
+    <color name="purple_A400">#d500f9</color>
+    <color name="purple_A700">#aa00ff</color>
+
+    <color name="deepblue_A100">#b388ff</color>
+    <color name="deepblue_A200">#7c4dff</color>
+    <color name="deepblue_A400">#651fff</color>
+    <color name="deepblue_A700">#6200ea</color>
+
+    <color name="indigo_A100">#8c9eff</color>
+    <color name="indigo_A200">#536dfe</color>
+    <color name="indigo_A400">#3d5afe</color>
+    <color name="indigo_A700">#304ffe</color>
+
+    <color name="blue_A100">#82b1ff</color>
+    <color name="blue_A200">#448aff</color>
+    <color name="blue_A400">#2979ff</color>
+    <color name="blue_A700">#2962ff</color>
+
+    <color name="lightblue_A100">#80d8ff</color>
+    <color name="lightblue_A200">#40c4ff</color>
+    <color name="lightblue_A400">#00b0ff</color>
+    <color name="lightblue_A700">#0091ea</color>
+
+    <color name="cyan_A100">#84ffff</color>
+    <color name="cyan_A200">#18ffff</color>
+    <color name="cyan_A400">#00e5ff</color>
+    <color name="cyan_A700">#00b8d4</color>
+
+    <color name="teal_A100">#a7ffeb</color>
+    <color name="teal_A200">#64ffda</color>
+    <color name="teal_A400">#1de9b6</color>
+    <color name="teal_A700">#00bfa5</color>
+
+    <color name="green_A100">#b9f6ca</color>
+    <color name="green_A200">#69f0ae</color>
+    <color name="green_A400">#00e676</color>
+    <color name="green_A700">#00c853</color>
+
+    <color name="lightgreen_A100">#ccff90</color>
+    <color name="lightgreen_A200">#b2ff59</color>
+    <color name="lightgreen_A400">#76ff03</color>
+    <color name="lightgreen_A700">#64dd17</color>
+
+    <color name="lime_A100">#f4ff81</color>
+    <color name="lime_A200">#eeff41</color>
+    <color name="lime_A400">#c6ff00</color>
+    <color name="lime_A700">#aeea00</color>
+
+    <color name="yellow_A100">#ffff8d</color>
+    <color name="yellow_A200">#ffff00</color>
+    <color name="yellow_A400">#ffea00</color>
+    <color name="yellow_A700">#ffd600</color>
+
+
+    <color name="amber_A100">#ffe57f</color>
+    <color name="amber_A200">#ffd740</color>
+    <color name="amber_A400">#ffc400</color>
+    <color name="amber_A700">#ffab00</color>
+
+    <color name="orange_A100">#ffd180</color>
+    <color name="orange_A200">#ffab40</color>
+    <color name="orange_A400">#ff9100</color>
+    <color name="orange_A700">#ff6d00</color>
+
+    <color name="deeporange_A100">#ff9e80</color>
+    <color name="deeporange_A200">#ff6e40</color>
+    <color name="deeporange_A400">#ff3d00</color>
+    <color name="deeporange_A700">#dd2c00</color>
+
+    <!--Brown, Black, Blue Grey, Grey não se usa accent -->
+
+    <!-- LIGHT BACKGROUNDS: Dark text (#000000)     Opacity
+         Primary text                               87%
+        Secondary text                              54%
+        Disabled text, hint text, and icons         38%
+        Dividers                                    12%
+
+         -->
+
+    <!--DARK BACKGROUNDS: Light text (#FFFFFF)   Opacity
+                          Primary text            100%
+                          Secondary text          70%
+            Disabled text, hint text, and icons   50%
+                           Dividers               12%
+
+
+    -->
+
+
+
 </resources>
