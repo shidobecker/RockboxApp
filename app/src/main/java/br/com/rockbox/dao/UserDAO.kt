@@ -7,16 +7,13 @@ import io.realm.Realm
 
 
 class UserDAO (val user:User, val context: Context)  {
-    val realm: Realm
 
-init{
-    Realm.init(context);
-    realm = Realm.getDefaultInstance()
-}
+
+
     //Function extended
     fun Realm.insertUser(){
         executeTransaction {
-            realm.copyToRealm(user)
+            copyToRealm(user)
         }
 
     }
