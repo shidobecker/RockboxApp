@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
 
 android {
@@ -11,19 +12,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        /*Java 8*/
-        jackOptions {
-            enabled true
-        }
+
         //Exclusão para Butterknife e Realm juntos
         packagingOptions {
             exclude 'META-INF/services/javax.annotation.processing.Processor'
         }
-    }
-        /*Java 8*/
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -31,6 +24,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -46,8 +42,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     //Butterknife
     compile "com.jakewharton:butterknife:${butterknifeLibVersion}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeLibVersion}"
-
+    kapt "com.jakewharton:butterknife-compiler:${butterknifeLibVersion}" //Necessário kapt para rodar butterknife com kotlin
 
     //Gson
     compile "com.google.code.gson:gson:${gsonLibVersion}"
@@ -62,4 +57,11 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
 
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
+kapt {
+    generateStubs = true
 }

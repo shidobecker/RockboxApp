@@ -15,9 +15,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.model.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.internal.Context;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,10 +33,18 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
 
     TextView nav_header_username;
+
+
+    private Realm realm;
+    private Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.setDebug(true);
+        //Teste
         ButterKnife.bind(this);
         setUpToolbar();
         setUpNavigationDrawer();
@@ -51,8 +63,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     private void setUpToolbar(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
@@ -69,14 +79,24 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
+
+        Realm.init(MainActivity.this);
+        realm = Realm.getDefaultInstance();
+
+        User u = new User(1, "Julio Ribeiro", null);
+        UserDAO dao = new UserDAO(u, MainActivity.this);
+        //dao.insertUser(realm);
+        u = dao.returnUser(realm);
+
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         nav_header_username = (TextView) hView.findViewById(R.id.nav_header_username);
-        User u = new User();
-        u.setName("Shido");
         nav_header_username.setText(u.getName());
     }
 
 
+    private void checkFirstAccess(){
+
+    }
 
 
     @Override
