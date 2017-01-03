@@ -10,6 +10,14 @@
         <item name="colorControlHighlight">@color/colorControlHighlight</item>
         <item name="colorControlActivated">@color/colorControlActivated</item>
 
+
+
+        <!--Enable transictions between all activities-->
+        <item name="android:windowContentTransitions">true</item>
+
+        <!-- Disable Activity Transitions Overlap -->
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
     </style>
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
@@ -33,7 +41,22 @@
         <item name="android:textColorPrimary">@color/white</item><!--Text color of overflow menu -->
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+    </style>
 
+    <style name ="LoginTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name = "android:background">@color/white</item>
+    </style>
+
+    <style name ="LoginTitle" parent="LoginTheme">
+        <item name ="android:textColor">@color/black</item>
+        <item name ="android:textSize">@dimen/material_typography_title</item>
+        <item name ="android:textStyle">bold</item>
+    </style>
 
 </resources>
 

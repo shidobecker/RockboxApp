@@ -4,5 +4,15 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title_activity_login">Crie seu nome de usuário</string>
+
+    <!-- Strings related to login -->
+    <string name="login_username">Username</string>
+    <string name="action_sign_in">Entre ou crie seu usuário</string>
+    <string name="action_sign_in_short">Entre</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="loginTitle">Escolha um nome de usuário</string>
+
 </resources>

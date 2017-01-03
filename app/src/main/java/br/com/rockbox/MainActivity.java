@@ -1,8 +1,15 @@
 package br.com.rockbox;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +19,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.model.User;
+import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.internal.Context;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,14 +46,16 @@ public class MainActivity extends AppCompatActivity
     private Realm realm;
     private Context context;
 
+    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
+        setUpEnteringAnimation();
         setContentView(R.layout.activity_main);
-        ButterKnife.setDebug(true);
-        //Teste
         ButterKnife.bind(this);
+        returnUserSettings();
         setUpToolbar();
         setUpNavigationDrawer();
 
@@ -62,6 +72,16 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void setUpEnteringAnimation(){
+        Fade fadeAnimation = new Fade();
+        fadeAnimation.setDuration(2000);
+        fadeAnimation.setMode(Visibility.MODE_IN);//Enter the screen from the Right
+        getWindow().setEnterTransition(fadeAnimation);
+        getWindow().setReenterTransition(fadeAnimation);
+        getWindow().setExitTransition(fadeAnimation);
+        getWindow().setAllowEnterTransitionOverlap(false);
+
+    }
 
     private void setUpToolbar(){
         setSupportActionBar(toolbar);
@@ -80,24 +100,36 @@ public class MainActivity extends AppCompatActivity
         navigationView.setItemIconTintList(null);
 
 
-        Realm.init(MainActivity.this);
+      /*  Realm.init(MainActivity.this);
         realm = Realm.getDefaultInstance();
 
         User u = new User(1, "Julio Ribeiro", null);
         UserDAO dao = new UserDAO(u, MainActivity.this);
-        //dao.insertUser(realm);
-        u = dao.returnUser(realm);
+       // dao.insertUser(realm);
+        u = dao.returnUser(realm);*/
 
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         nav_header_username = (TextView) hView.findViewById(R.id.nav_header_username);
-        nav_header_username.setText(u.getName());
+        nav_header_username.setText(loggedUser.getName());
     }
 
 
-    private void checkFirstAccess(){
+    private void  returnUserSettings(){
+        SharedPreferences sharedPreferences = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, android.content.Context.MODE_PRIVATE);
+        String usernameShared = sharedPreferences.getString(GlobalConstants.USERNAME,null);
+        Realm.init(MainActivity.this);
+        realm = Realm.getDefaultInstance();
+        UserDAO dao = new UserDAO(new User(0, usernameShared, null), MainActivity.this);
+        loggedUser = dao.returnUser(realm);
+
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finishAfterTransition();
+        return true;
+    }
 
     @Override
     public void onBackPressed() {

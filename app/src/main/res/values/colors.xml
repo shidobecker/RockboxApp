@@ -3,9 +3,9 @@
     <color name="colorPrimary">@color/red_700</color>
     <color name="colorPrimaryDark">@color/red_800</color>
     <color name="colorAccent">@color/deepblue_A400</color>
-    <color name="colorControlHighlight">@color/lightblue_A100</color>
-    <color name="colorButtonNormal">@color/teal_A700</color>
-    <color name="colorControlActivated">@color/teal_A200</color>
+    <color name="colorControlHighlight">@color/deepblue_A400</color>
+    <color name="colorButtonNormal">@color/deeporange_A700</color>
+    <color name="colorControlActivated">@color/amber_700</color>
 
 
     <color name="black">#000000</color>
