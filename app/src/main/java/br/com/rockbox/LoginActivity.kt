@@ -73,6 +73,8 @@ class LoginActivity : AppCompatActivity(){
             showProgress(true)
             mAuthTask = UserLoginTask(username)
             mAuthTask!!.execute()
+
+
         }
     }
 
@@ -87,7 +89,7 @@ class LoginActivity : AppCompatActivity(){
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-
+            //Tirando a visibilidade do login form para deixar só o progress bar
             login_form!!.visibility = if (show) View.GONE else View.VISIBLE
             login_form!!.animate().setDuration(shortAnimTime.toLong()).alpha(
                     (if (show) 0 else 1).toFloat()).setListener(object : AnimatorListenerAdapter() {
@@ -122,7 +124,11 @@ class LoginActivity : AppCompatActivity(){
                 val context:Context = this@LoginActivity
                 Realm.init(context)
                 val realm = Realm.getDefaultInstance()
+                try{
+                    Thread.sleep(3000)
+                }catch(e: Exception){
 
+                }
                 val newuser  = User(0, username)
                 val udao = UserDAO (newuser, context)
 

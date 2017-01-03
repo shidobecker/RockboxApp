@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "470191509950",
+    "firebase_url": "https://rockbox-8f745.firebaseio.com",
+    "project_id": "rockbox-8f745",
+    "storage_bucket": "rockbox-8f745.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470191509950:android:467684d92374dcbb",
+        "android_client_info": {
+          "package_name": "br.com.rockbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470191509950-ujnndev2qgsnacrk0mofb8kr315mijmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.rockbox",
+            "certificate_hash": "B82D771FF597F88DFCD3340D2A986820DACA94D4"
+          }
+        },
+        {
+          "client_id": "470191509950-sp5rkbkmah8d8eu7af4f5a81c91mdmks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{"current_key": "AIzaSyC0Dzxr7KY_ruDP4moB2I2jviHc6Qg8qAY"} ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470191509950-sp5rkbkmah8d8eu7af4f5a81c91mdmks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

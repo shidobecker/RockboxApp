@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity
 
     TextView nav_header_username;
 
-
     private Realm realm;
     private Context context;
 
@@ -98,15 +97,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-
-
-      /*  Realm.init(MainActivity.this);
-        realm = Realm.getDefaultInstance();
-
-        User u = new User(1, "Julio Ribeiro", null);
-        UserDAO dao = new UserDAO(u, MainActivity.this);
-       // dao.insertUser(realm);
-        u = dao.returnUser(realm);*/
 
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         nav_header_username = (TextView) hView.findViewById(R.id.nav_header_username);

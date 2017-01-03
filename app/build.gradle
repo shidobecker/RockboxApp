@@ -60,6 +60,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'org.jetbrains.anko:anko-sdk21:0.9.1'
+
+
+    //GooglePlayServices
+    compile 'com.google.android.gms:play-services-maps:9.0.0'
+    compile 'com.google.android.gms:play-services-location:9.0.0'
 }
 repositories {
     mavenCentral()
@@ -67,3 +72,5 @@ repositories {
 kapt {
     generateStubs = true
 }
+
+apply plugin: 'com.google.gms.google-services'

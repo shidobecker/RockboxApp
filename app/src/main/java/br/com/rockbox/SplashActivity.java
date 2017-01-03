@@ -18,8 +18,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent;
-        try {
-            Thread.sleep(2000);
         //Verificar se usuário já está logado/baixar algumas poucas coisas, etc
         if(checkUserFirstTime()){
             intent = new Intent(SplashActivity.this, LoginActivity.class);
@@ -31,11 +29,8 @@ public class SplashActivity extends AppCompatActivity {
             overridePendingTransition(R.animator.fade_in, R.animator.fade_out);
         }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }finally {
-            finish();
-        }
+         finish();
+
 
     }
 
