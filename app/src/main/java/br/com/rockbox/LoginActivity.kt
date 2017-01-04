@@ -34,6 +34,10 @@ import android.util.Log
 import br.com.rockbox.dao.UserDAO
 import br.com.rockbox.model.User
 import br.com.rockbox.utils.GlobalConstants
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import io.realm.Realm
 
 import kotlinx.android.synthetic.main.activity_login.*
@@ -46,6 +50,8 @@ class LoginActivity : AppCompatActivity(){
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     var mAuthTask: UserLoginTask? = null
+    var myFirebaseAuth: FirebaseAuth? = null
+    var myFirebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,38 +119,57 @@ class LoginActivity : AppCompatActivity(){
         }
     }
 
-
     inner class UserLoginTask internal constructor(private val username: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
             Log.i(GlobalConstants.LOGIN_ACTIVITY_TAG, "UserLoginTask")
+            val newuser = User(username)
 
-                //Chamada ao Realm
-                val context:Context = this@LoginActivity
-                Realm.init(context)
-                val realm = Realm.getDefaultInstance()
-                try{
-                    Thread.sleep(3000)
-                }catch(e: Exception){
+            writeOnRealmDatabase(newuser)
 
-                }
-                val newuser  = User(0, username)
-                val udao = UserDAO (newuser, context)
+            val sharedPreferencesEditor: SharedPreferences.Editor = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, Context.MODE_PRIVATE).edit()
+            sharedPreferencesEditor.putBoolean(GlobalConstants.FIRST_TIME, false)
+            sharedPreferencesEditor.putString(GlobalConstants.USERNAME, username)
+            sharedPreferencesEditor.commit()
 
-                udao.insertUser(realm)
-
-                Log.i(GlobalConstants.LOGIN_ACTIVITY_TAG, "Nome inserido ${udao.returnUser(realm).name}")
-
-                val sharedPreferencesEditor :SharedPreferences.Editor = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, Context.MODE_PRIVATE).edit()
-                sharedPreferencesEditor.putBoolean(GlobalConstants.FIRST_TIME, false)
-                sharedPreferencesEditor.putString(GlobalConstants.USERNAME, username)
-                sharedPreferencesEditor.commit()
-
-                val intent : Intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
+            val intent: Intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
 
             return true
+        }
+
+        fun writeOnFirebase(newuser: User){
+            myFirebaseAuth = FirebaseAuth.getInstance()
+            val mDatabase = FirebaseDatabase.getInstance().getReference();
+
+            val usersRef = mDatabase.child("users")
+            //Escrevendo no Firebase
+            mDatabase.child("users").setValue(newuser)
+
+            var returnedUser: User? = null
+            usersRef.child(username).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError?) {
+                    Log.i(GlobalConstants.LOGIN_ACTIVITY_TAG, error!!.message)
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot?) {
+                    returnedUser = snapshot!!.getValue(User::class.java)
+                }
+
+            })
+
+            Log.i("RETURNED USER", "Usuario Retornado ${returnedUser!!.username}")
+
+        }
+
+        fun writeOnRealmDatabase(newuser: User){
+            //Chamada ao Realm
+            val context:Context = this@LoginActivity
+            Realm.init(context)
+            val realm = Realm.getDefaultInstance()
+            val udao = UserDAO (newuser, context)
+            udao.insertUser(realm)
         }
 
         override fun onPostExecute(success: Boolean?) {

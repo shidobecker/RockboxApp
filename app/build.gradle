@@ -62,9 +62,18 @@ dependencies {
     compile 'org.jetbrains.anko:anko-sdk21:0.9.1'
 
 
-    //GooglePlayServices
-    compile 'com.google.android.gms:play-services-maps:9.0.0'
-    compile 'com.google.android.gms:play-services-location:9.0.0'
+    //Google Firebase
+
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.1'
+
+
+    //MongoDB
+    compile 'org.mongodb:mongo-java-driver:3.0.0'
+
+
 }
 repositories {
     mavenCentral()

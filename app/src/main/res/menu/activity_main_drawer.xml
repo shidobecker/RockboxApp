@@ -7,6 +7,11 @@
             android:icon="@drawable/navmenucalendar"
             android:title="Calendário do Rock" />
         <item
+            android:id="@+id/nav_bands"
+            android:icon="@drawable/navmenudrums"
+            android:title="Minhas Bandas" />
+
+        <item
             android:id="@+id/nav_player"
             android:icon="@drawable/navmenuplayer"
             android:title="Meu Player" />

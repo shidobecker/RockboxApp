@@ -1,56 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.com.rockbox.MainActivity"
-    tools:showIn="@layout/app_bar_main"
-    android:background="@color/black">
+    tools:showIn="@layout/app_bar_main">
 
+<FrameLayout
+    android:id="@+id/mainFrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+</FrameLayout>
 
-
-        <ImageView
-            android:layout_margin="10dp"
-            android:id="@+id/imgView1"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:src="@drawable/info1teste"/>
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="110dp"
-            app:srcCompat="@drawable/videoimage"
-            android:id="@+id/imageView5"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imgView1"
-            android:layout_marginLeft="14dp"
-            android:layout_marginStart="14dp"/>
-
-
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/info2teste"
-        android:id="@+id/imageView6"
-        android:layout_below="@id/imgView1"/>
-
-    <ImageView
-        android:layout_below="@id/imageView6"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        app:srcCompat="@drawable/info3teste"
-        android:id="@+id/imageView7"/>
-
-    </RelativeLayout>
-</LinearLayout>
+ </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Window;
 
@@ -22,14 +23,16 @@ public class SplashActivity extends AppCompatActivity {
         if(checkUserFirstTime()){
             intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
-            overridePendingTransition(R.animator.fade_in, R.animator.fade_out);
         }else {
+            Fade fade = new Fade();
+            fade.setDuration(1000);
             intent = new Intent(SplashActivity.this, MainActivity.class);
+            getWindow().setExitTransition(fade);
             startActivity(intent);
-            overridePendingTransition(R.animator.fade_in, R.animator.fade_out);
+
         }
 
-         finish();
+         //finish();
 
 
     }

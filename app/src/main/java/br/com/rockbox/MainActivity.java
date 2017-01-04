@@ -1,5 +1,7 @@
 package br.com.rockbox;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.rockbox.dao.UserDAO;
+import br.com.rockbox.fragments.BandListFragment;
+import br.com.rockbox.fragments.MainFragment;
 import br.com.rockbox.model.User;
 import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
@@ -47,17 +51,24 @@ public class MainActivity extends AppCompatActivity
 
     private User loggedUser;
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
-        setUpEnteringAnimation();
+       // setUpEnteringAnimation();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         returnUserSettings();
         setUpToolbar();
         setUpNavigationDrawer();
 
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
+        fragmentTransaction.commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +85,7 @@ public class MainActivity extends AppCompatActivity
     private void setUpEnteringAnimation(){
         Fade fadeAnimation = new Fade();
         fadeAnimation.setDuration(2000);
-        fadeAnimation.setMode(Visibility.MODE_IN);//Enter the screen from the Right
+        fadeAnimation.setMode(Visibility.MODE_IN);
         getWindow().setEnterTransition(fadeAnimation);
         getWindow().setReenterTransition(fadeAnimation);
         getWindow().setExitTransition(fadeAnimation);
@@ -100,7 +111,7 @@ public class MainActivity extends AppCompatActivity
 
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         nav_header_username = (TextView) hView.findViewById(R.id.nav_header_username);
-        nav_header_username.setText(loggedUser.getName());
+        nav_header_username.setText(loggedUser.getUsername());
     }
 
 
@@ -109,11 +120,19 @@ public class MainActivity extends AppCompatActivity
         String usernameShared = sharedPreferences.getString(GlobalConstants.USERNAME,null);
         Realm.init(MainActivity.this);
         realm = Realm.getDefaultInstance();
-        UserDAO dao = new UserDAO(new User(0, usernameShared, null), MainActivity.this);
+        UserDAO dao = new UserDAO(new User(usernameShared, null, null), MainActivity.this);
         loggedUser = dao.returnUser(realm);
 
 
     }
+
+
+    private void replaceMainFragment(){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
+        fragmentTransaction.commit();
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -148,6 +167,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_calendar) {
+
+        }else if (id ==R.id.nav_bands){
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+            fragmentTransaction.replace(R.id.mainFrameLayout, new BandListFragment());
+            fragmentTransaction.commit();
+
         } else if (id == R.id.nav_player) {
 
         } else if (id == R.id.nav_lyrics) {
