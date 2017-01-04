@@ -20,6 +20,7 @@
             app:popupTheme="@style/PopupTheme">
 
             <TextView
+                android:id="@+id/appBarApplicationName"
                 android:text="@string/app_name"
                 style="@style/ToolBarTitle"
                 android:layout_width="wrap_content"

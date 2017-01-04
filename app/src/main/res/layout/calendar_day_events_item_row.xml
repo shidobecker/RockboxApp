@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:text="Calendar Row Title"
+        android:id="@+id/calendarRowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:src="@drawable/videoimage"
+            />
+
+        <TextView
+            android:text="Calendar Row Legenda"
+            android:id="@+id/calendarRowDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>

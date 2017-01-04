@@ -1,0 +1,38 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+              android:orientation="vertical"
+             tools:context="br.com.rockbox.fragments.CalendarFragment"
+    android:weightSum="100">
+
+
+
+    <CalendarView
+        android:layout_weight="60"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:id="@+id/calendarView"/>
+
+    <TextView
+        android:layout_weight="70"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Celebrações do Mês"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_weight="80"
+        android:id="@+id/calendarDayEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+
+
+</LinearLayout>

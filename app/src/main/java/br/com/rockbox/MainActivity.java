@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.fragments.BandListFragment;
+import br.com.rockbox.fragments.CalendarFragment;
 import br.com.rockbox.fragments.MainFragment;
 import br.com.rockbox.model.User;
 import br.com.rockbox.utils.GlobalConstants;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
 
     TextView nav_header_username;
+
+    @BindView(R.id.appBarApplicationName)
+    TextView appBarApplicationName;
 
     private Realm realm;
     private Context context;
@@ -79,8 +83,23 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        appBarApplicationName.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
 
     }
+
+
+
+
 
     private void setUpEnteringAnimation(){
         Fade fadeAnimation = new Fade();
@@ -92,6 +111,9 @@ public class MainActivity extends AppCompatActivity
         getWindow().setAllowEnterTransitionOverlap(false);
 
     }
+
+
+
 
     private void setUpToolbar(){
         setSupportActionBar(toolbar);
@@ -167,6 +189,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_calendar) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.mainFrameLayout, new CalendarFragment());
+            fragmentTransaction.commit();
 
         }else if (id ==R.id.nav_bands){
             fragmentTransaction = fragmentManager.beginTransaction();
