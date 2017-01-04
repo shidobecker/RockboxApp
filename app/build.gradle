@@ -74,6 +74,9 @@ dependencies {
     compile 'org.mongodb:mongo-java-driver:3.0.0'
 
 
+    //Material Calendar View
+    compile 'com.prolificinteractive:material-calendarview:1.4.2'
+
 }
 repositories {
     mavenCentral()
