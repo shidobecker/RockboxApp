@@ -31,6 +31,7 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.*
 import android.util.Log
+import br.com.rockbox.connections.MongoConnection
 import br.com.rockbox.dao.UserDAO
 import br.com.rockbox.model.User
 import br.com.rockbox.utils.GlobalConstants
@@ -126,7 +127,8 @@ class LoginActivity : AppCompatActivity(){
             Log.i(GlobalConstants.LOGIN_ACTIVITY_TAG, "UserLoginTask")
             val newuser = User(username)
 
-            writeOnRealmDatabase(newuser)
+            //writeOnRealmDatabase(newuser)
+            writeOnMongoDatabase(newuser)
 
             val sharedPreferencesEditor: SharedPreferences.Editor = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, Context.MODE_PRIVATE).edit()
             sharedPreferencesEditor.putBoolean(GlobalConstants.FIRST_TIME, false)
@@ -162,6 +164,14 @@ class LoginActivity : AppCompatActivity(){
             Log.i("RETURNED USER", "Usuario Retornado ${returnedUser!!.username}")
 
         }
+
+        fun writeOnMongoDatabase(newuser: User){
+            val context:Context = this@LoginActivity
+            val userDao = UserDAO(newuser,context)
+            userDao.insertUserMongoDB()
+
+        }
+
 
         fun writeOnRealmDatabase(newuser: User){
             //Chamada ao Realm

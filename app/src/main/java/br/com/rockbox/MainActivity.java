@@ -148,6 +148,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void  returnUserSettingsFromMongo(){
+        SharedPreferences sharedPreferences = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, android.content.Context.MODE_PRIVATE);
+        String usernameShared = sharedPreferences.getString(GlobalConstants.USERNAME,null);
+        UserDAO dao = new UserDAO(new User(usernameShared, null, null), MainActivity.this);
+        loggedUser = dao.returnUserSettingsFromMongo();
+
+
+    }
+
 
     private void replaceMainFragment(){
         fragmentTransaction = fragmentManager.beginTransaction();
