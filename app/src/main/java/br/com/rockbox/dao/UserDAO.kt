@@ -40,6 +40,10 @@ init{
 
     }
 
+
+
+
+
     fun returnUserSettingsFromMongo():User{
         var gson: Gson = Gson()
         val json: String = gson.toJson(user)

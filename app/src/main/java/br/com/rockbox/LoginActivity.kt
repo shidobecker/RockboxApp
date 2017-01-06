@@ -42,6 +42,7 @@ import com.google.firebase.database.*
 import io.realm.Realm
 
 import kotlinx.android.synthetic.main.activity_login.*
+import java.net.URL
 
 /**
  * A login screen that offers login via email/password.
@@ -128,7 +129,9 @@ class LoginActivity : AppCompatActivity(){
             val newuser = User(username)
 
             //writeOnRealmDatabase(newuser)
-            writeOnMongoDatabase(newuser)
+            //writeOnMongoDatabase(newuser)
+            var url: URL = URL("https://rockbox-shidobecker.c9users.io/api/status")
+
 
             val sharedPreferencesEditor: SharedPreferences.Editor = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, Context.MODE_PRIVATE).edit()
             sharedPreferencesEditor.putBoolean(GlobalConstants.FIRST_TIME, false)
