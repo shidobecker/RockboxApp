@@ -128,7 +128,7 @@ class LoginActivity : AppCompatActivity(){
             Log.i(GlobalConstants.LOGIN_ACTIVITY_TAG, "UserLoginTask")
             val newuser = User(username)
 
-            //writeOnRealmDatabase(newuser)
+            writeOnRealmDatabase(newuser)
             //writeOnMongoDatabase(newuser)
             var url: URL = URL("https://rockbox-shidobecker.c9users.io/api/status")
 
