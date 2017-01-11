@@ -16,4 +16,13 @@ public class GlobalConstants {
     public static final String SPLASH_ACTIVITY_TAG = SplashActivity.class.getSimpleName();
 
 
+    //Fragments Constants
+    public static final int CalendarFragment = 0;
+    public static final int MainFragment = 1;
+    public static final int PlayerMainFragment = 2;
+    public static final int UserSongsFragment = 3;
+    public static final int BandListFragment = 4;
+
+
+
 }

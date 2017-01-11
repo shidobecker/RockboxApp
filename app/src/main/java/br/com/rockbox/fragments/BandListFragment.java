@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import br.com.rockbox.R;
 
-
+/**
+ * Classe responsavel por listar as bandas que o usuário gosta como bandas dele para que depois venham informações das mesmas
+ */
 public class BandListFragment extends Fragment {
 
     @Nullable

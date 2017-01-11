@@ -1,5 +1,6 @@
 package br.com.rockbox;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -70,11 +71,8 @@ public class MainActivity extends AppCompatActivity
         returnUserSettings();
         setUpToolbar();
         setUpNavigationDrawer();
-
         fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
-        fragmentTransaction.commit();
+        replaceMainFragment(GlobalConstants.MainFragment);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,10 +87,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View view) {
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
-                fragmentTransaction.commit();
+                replaceMainFragment(GlobalConstants.MainFragment);
             }
         });
 
@@ -155,16 +150,37 @@ public class MainActivity extends AppCompatActivity
         String usernameShared = sharedPreferences.getString(GlobalConstants.USERNAME,null);
         UserDAO dao = new UserDAO(new User(usernameShared, null, null), MainActivity.this);
         //loggedUser = dao.returnUserSettingsFromMongo();
-
-
     }
 
 
-    private void replaceMainFragment(){
+    private void replaceMainFragment(int FragmentType){
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
+
+        switch (FragmentType){
+            case GlobalConstants.CalendarFragment:
+                fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.replace(R.id.mainFrameLayout, new CalendarFragment());
+                break;
+
+            case GlobalConstants.MainFragment:
+                fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
+                break;
+
+            case GlobalConstants.PlayerMainFragment:
+                fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.replace(R.id.mainFrameLayout, new PlayerMainFragment());
+                break;
+
+            case GlobalConstants.BandListFragment:
+                fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.replace(R.id.mainFrameLayout, new BandListFragment());
+                break;
+        }
         fragmentTransaction.commit();
     }
+
+
 
 
     @Override
@@ -172,6 +188,8 @@ public class MainActivity extends AppCompatActivity
         finishAfterTransition();
         return true;
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -200,22 +218,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_calendar) {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.mainFrameLayout, new CalendarFragment());
-            fragmentTransaction.commit();
+            replaceMainFragment(GlobalConstants.CalendarFragment);
 
         }else if (id ==R.id.nav_bands){
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
-            fragmentTransaction.replace(R.id.mainFrameLayout, new BandListFragment());
-            fragmentTransaction.commit();
+           replaceMainFragment(GlobalConstants.BandListFragment);
 
         } else if (id == R.id.nav_player) {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
-            fragmentTransaction.replace(R.id.mainFrameLayout, new PlayerMainFragment());
-            fragmentTransaction.commit();
-
+            replaceMainFragment(GlobalConstants.PlayerMainFragment);
         } else if (id == R.id.nav_lyrics) {
 
         } else if (id == R.id.nav_youtube) {
