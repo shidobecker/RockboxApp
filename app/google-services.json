@@ -27,7 +27,11 @@
           "client_type": 3
         }
       ],
-      "api_key": [{"current_key": "AIzaSyC0Dzxr7KY_ruDP4moB2I2jviHc6Qg8qAY"} ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp6eu9OXkxw3TU2-513AV3eXUaAkP8yYw"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1

@@ -29,6 +29,8 @@ import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.fragments.BandListFragment;
 import br.com.rockbox.fragments.CalendarFragment;
 import br.com.rockbox.fragments.MainFragment;
+import br.com.rockbox.fragments.NowPlayingFragment;
+import br.com.rockbox.fragments.PlayerMainFragment;
 import br.com.rockbox.model.User;
 import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences(GlobalConstants.PREFERENCES_TAG, android.content.Context.MODE_PRIVATE);
         String usernameShared = sharedPreferences.getString(GlobalConstants.USERNAME,null);
         UserDAO dao = new UserDAO(new User(usernameShared, null, null), MainActivity.this);
-        loggedUser = dao.returnUserSettingsFromMongo();
+        //loggedUser = dao.returnUserSettingsFromMongo();
 
 
     }
@@ -209,6 +211,10 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_player) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+            fragmentTransaction.replace(R.id.mainFrameLayout, new PlayerMainFragment());
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_lyrics) {
 

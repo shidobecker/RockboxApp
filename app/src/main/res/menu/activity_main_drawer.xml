@@ -4,21 +4,21 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@drawable/navmenucalendar"
-            android:title="Calendário do Rock" />
+            android:icon="@drawable/nav_menu_calendar_24dp"
+            android:title="@string/nav_menu_calendar"/>
         <item
             android:id="@+id/nav_bands"
-            android:icon="@drawable/navmenudrums"
-            android:title="Minhas Bandas" />
+            android:icon="@drawable/nav_menu_bands_24dp"
+            android:title="@string/nav_menu_bands" />
 
         <item
             android:id="@+id/nav_player"
-            android:icon="@drawable/navmenuplayer"
-            android:title="Meu Player" />
+            android:icon="@drawable/nav_menu_player_24dp"
+            android:title="@string/nav_menu_player" />
         <item
             android:id="@+id/nav_lyrics"
-            android:icon="@drawable/navmenulyrics"
-            android:title="Minhas letras" />
+            android:icon="@drawable/nav_menu_lyrics_24dp"
+            android:title="@string/nav_menu_lyrics" />
 
     </group>
 
@@ -27,11 +27,11 @@
             <item
                 android:id="@+id/nav_youtube"
                 android:icon="@drawable/navmenuyoutube"
-                android:title="Youtube" />
+                android:title="@string/nav_menu_youtube" />
             <item
                 android:id="@+id/nav_spotify"
                 android:icon="@drawable/navmenuspotify"
-                android:title="Spotify" />
+                android:title="@string/nav_menu_spotify" />
         </menu>
     </item>
 

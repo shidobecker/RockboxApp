@@ -31,7 +31,6 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.*
 import android.util.Log
-import br.com.rockbox.connections.MongoConnection
 import br.com.rockbox.dao.UserDAO
 import br.com.rockbox.model.User
 import br.com.rockbox.utils.GlobalConstants
@@ -113,6 +112,14 @@ class LoginActivity : AppCompatActivity(){
                     login_progress!!.visibility = if (show) View.VISIBLE else View.GONE
                 }
             })
+            login_thankyou!!.visibility = if (show) View.VISIBLE else View.GONE
+            login_thankyou!!.animate().setDuration(shortAnimTime.toLong()).alpha(
+                    (if (show) 1 else 0).toFloat()).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    login_thankyou!!.visibility = if (show) View.VISIBLE else View.GONE
+                }
+            })
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
