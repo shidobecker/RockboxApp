@@ -40,8 +40,8 @@ public class PlayerMainFragment extends Fragment {
 
 
     private void setupTabLayout(){
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.player_tab_nowplaying));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.player_tab_songlist));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.player_tab_nowplaying));
 
         PlayerTabsAdapter playerTabsAdapter = new PlayerTabsAdapter(getFragmentManager());
         viewPager.setAdapter(playerTabsAdapter);
