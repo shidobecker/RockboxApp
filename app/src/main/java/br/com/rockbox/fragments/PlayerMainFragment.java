@@ -5,12 +5,14 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.rockbox.R;
 import br.com.rockbox.adapter.PlayerTabsAdapter;
+import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,7 +27,14 @@ public class PlayerMainFragment extends Fragment {
     ViewPager viewPager;
 
 
+    private int currentSongPosition;
+
     public PlayerMainFragment() {
+        //Pegando a musica e colocando no position
+        if(getArguments()!=null) {
+            currentSongPosition = getArguments().getInt(PlayerTabsAdapter.currentSongPositionName, -1);
+            Log.i("PlayerMainFragment: ", String.valueOf(currentSongPosition));
+        }
     }
 
 
@@ -43,10 +52,13 @@ public class PlayerMainFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.player_tab_songlist));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.player_tab_nowplaying));
 
-        PlayerTabsAdapter playerTabsAdapter = new PlayerTabsAdapter(getFragmentManager());
+        //Enviando a currentSongPosition para o PlayerTabsAdapter
+        PlayerTabsAdapter playerTabsAdapter = new PlayerTabsAdapter(getFragmentManager(), currentSongPosition);
         viewPager.setAdapter(playerTabsAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
+        if(currentSongPosition > -1){
+            tabLayout.getTabAt(1).select();
+        }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

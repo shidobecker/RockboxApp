@@ -3,10 +3,13 @@ package br.com.rockbox.adapter;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import br.com.rockbox.fragments.NowPlayingFragment;
 import br.com.rockbox.fragments.SongListFragment;
+import br.com.rockbox.model.Song;
 
 /**
  * Classe responsável por servir como adapter das tabs do player de música, novas tabs devem ser adicionadas aqui
@@ -18,11 +21,16 @@ public class PlayerTabsAdapter extends FragmentStatePagerAdapter {
     private NowPlayingFragment nowPlayingFragment;
     private SongListFragment songListFragment;
 
+    private int currentSongPosition = -1;
 
-    public PlayerTabsAdapter(FragmentManager fm) {
+    public static final String currentSongPositionName = "CurrentSongPositionName";
+
+    public PlayerTabsAdapter(FragmentManager fm, int currentSong) {
         super(fm);
         nowPlayingFragment = null;
         songListFragment = null;
+        this.currentSongPosition = currentSong;
+        Log.i("Player Tabs Adapter: ",  String.valueOf(currentSongPosition));
     }
 
     //Fragments do Player de música
@@ -34,7 +42,13 @@ public class PlayerTabsAdapter extends FragmentStatePagerAdapter {
                 return songListFragment;
             case 1:
                 nowPlayingFragment = new NowPlayingFragment();
+                if(currentSongPosition != -1){
+                    Bundle b = new Bundle();
+                    //Colocando a currentSongPosition novamente no bundle para passar para o NowPlayingFragment
+                    b.putInt(currentSongPositionName,currentSongPosition);
+                }
                 return nowPlayingFragment;
+
         }
         return null;
     }

@@ -1,54 +1,71 @@
 package br.com.rockbox.fragments;
 
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.List;
 
 import br.com.rockbox.R;
 import br.com.rockbox.adapter.PlayerTabsAdapter;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import br.com.rockbox.model.Song;
+import br.com.rockbox.service.MusicPlayerService;
+import br.com.rockbox.utils.GlobalConstants;
 
 
 public class NowPlayingFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
 
-
-
-    private OnFragmentInteractionListener mListener;
+    private Song currentSong = new Song();
+    private int currentSongPosition;
+    private List<Song> globalSongs;
 
     public NowPlayingFragment() {
+        //Pegando a currentSongPosition pelo bundle enviada pelo PageTabsAdapter
+        if(getArguments()!=null) {
+            currentSongPosition = getArguments().getInt(PlayerTabsAdapter.currentSongPositionName, -1);
+            Log.i("Now Playing Fragment: ", String.valueOf(currentSongPosition));
+        }
+        //Pegando a musica a partir da position
+        if(currentSongPosition != -1) {
+            currentSong = GlobalConstants.globalSongs.get(currentSongPosition);
+            Log.i("Now Playing Fragment: ", String.valueOf(currentSongPosition));
+
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        if(currentSong!=null){
+            //Toast.makeText(getActivity(), "Song: " + currentSong.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+        super.onStart();
     }
 
 
 
-    public static NowPlayingFragment newInstance(String param1, String param2) {
-        NowPlayingFragment fragment = new NowPlayingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -59,42 +76,19 @@ public class NowPlayingFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

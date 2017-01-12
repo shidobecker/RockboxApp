@@ -3,9 +3,16 @@ package br.com.rockbox;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.transition.Fade;
@@ -33,6 +40,7 @@ import br.com.rockbox.fragments.MainFragment;
 import br.com.rockbox.fragments.NowPlayingFragment;
 import br.com.rockbox.fragments.PlayerMainFragment;
 import br.com.rockbox.model.User;
+import br.com.rockbox.service.MusicPlayerService;
 import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +69,17 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
+
+    private MusicPlayerService musicPlayerService;
+    private ServiceConnection serviceConnection;
+    private boolean musicBound = false;
+    private MediaPlayer player ;
+    //Handler para atualizar o tempo de musica.
+    private Handler myHandler = new Handler();;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -73,15 +92,6 @@ public class MainActivity extends AppCompatActivity
         setUpNavigationDrawer();
         fragmentManager = getFragmentManager();
         replaceMainFragment(GlobalConstants.MainFragment);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Action 1", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         appBarApplicationName.setOnClickListener(new View.OnClickListener(){
 
@@ -108,6 +118,27 @@ public class MainActivity extends AppCompatActivity
         getWindow().setAllowEnterTransitionOverlap(false);
 
     }
+
+    private void createServiceConnection(){
+        musicPlayerService = new MusicPlayerService();
+        //Conexão com o service para poder acessar os metodos do mesmo
+         serviceConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Toast.makeText(MainActivity.this, "Service is Connected", Toast.LENGTH_SHORT).show();
+                musicBound = true;
+                MusicPlayerService.MusicBinder mLocalBinder = (MusicPlayerService.MusicBinder)service;
+                musicPlayerService = mLocalBinder.getServerInstance();
+            }
+
+            public void onServiceDisconnected(ComponentName name) {
+                musicBound = false;
+                musicPlayerService = null;
+            }
+
+        };
+
+    }
+
 
 
 
@@ -170,6 +201,13 @@ public class MainActivity extends AppCompatActivity
             case GlobalConstants.PlayerMainFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
                 fragmentTransaction.replace(R.id.mainFrameLayout, new PlayerMainFragment());
+                createServiceConnection();
+                Intent mIntent = new Intent(this, MusicPlayerService.class);
+                bindService(mIntent, serviceConnection, BIND_AUTO_CREATE);
+                //Carrega as musicas.
+                if(GlobalConstants.globalSongs == null) {
+                    musicPlayerService.loadSongs(this);
+                }
                 break;
 
             case GlobalConstants.BandListFragment:
@@ -200,6 +238,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    public void setMusicPlayerService(MusicPlayerService musicPlayerService) {
+        this.musicPlayerService = musicPlayerService;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -243,4 +285,41 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+
+    public Handler getMyHandler() {
+        return myHandler;
+    }
+
+    public void setMyHandler(Handler myHandler) {
+        this.myHandler = myHandler;
+    }
+
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(MediaPlayer player) {
+        this.player = player;
+    }
+
+    public boolean isMusicBound() {
+        return musicBound;
+    }
+
+    public void setMusicBound(boolean musicBound) {
+        this.musicBound = musicBound;
+    }
+
+    public ServiceConnection getServiceConnection() {
+        return serviceConnection;
+    }
+
+    public void setServiceConnection(ServiceConnection serviceConnection) {
+        this.serviceConnection = serviceConnection;
+    }
+
+    public MusicPlayerService getMusicPlayerService() {
+        return musicPlayerService;
+    }
 }
