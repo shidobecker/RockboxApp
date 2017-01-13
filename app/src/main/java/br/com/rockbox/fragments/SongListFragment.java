@@ -3,26 +3,36 @@ package br.com.rockbox.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ContentUris;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.rockbox.MainActivity;
 import br.com.rockbox.R;
 import br.com.rockbox.adapter.PlayerTabsAdapter;
 import br.com.rockbox.adapter.SongsAdapter;
 import br.com.rockbox.adapter.SongsRecyclerViewClickListener;
 import br.com.rockbox.model.Song;
 import br.com.rockbox.utils.GlobalConstants;
+import br.com.rockbox.utils.OverlapDecoration;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,6 +52,9 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
 
     private RecyclerView.LayoutManager layoutManager;
 
+    private Toolbar playerToolbar;
+
+    ImageView btnNextSong;
 
     public SongListFragment() {
     }
@@ -56,6 +69,9 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
         rvListSongs.setLayoutManager(layoutManager);
         adapter = new SongsAdapter(container.getContext(),songs, this);
         rvListSongs.setAdapter(adapter);
+        playerToolbar = ((MainActivity) getActivity()).getPlayerToolbar();
+        rvListSongs.addItemDecoration(new OverlapDecoration());
+
         return v;
     }
 
@@ -71,14 +87,37 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
         super.onCreate(savedInstanceState);
     }
 
+
+    //Transformar a Toolbar num singleton para ser acessada de todos os Fragments e Services.
     @Override
     public void recyclerViewListClicked(View v, int position) {
         adapter =  new SongsAdapter(getActivity(), songs, this);
         //Pegando a musica que foi clicada a partir da posição do this.getLayoutPosition() do SongsAdapter
         Song selectedSong  = songs.get(position);
         Log.i(GlobalConstants.SONG_LIST_FRAGMENT_TAG, String.valueOf(selectedSong.getTitle()));
+        playerToolbar.setVisibility(View.VISIBLE);
+        ((TextView)playerToolbar.findViewById(R.id.playerSongNameToolbar)).setText(selectedSong.getTitle());
+        ((TextView)playerToolbar.findViewById(R.id.playerArtistToolbar)).setText(selectedSong.getArtist());
+        Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
+                selectedSong.getAlbumID());
+        Picasso.with(v.getContext()).load(uri).placeholder(R.drawable.generic_album_cover)
+                .into((ImageView)playerToolbar.findViewById(R.id.playerAlbumCoverToolbar));
+
+        btnNextSong = (ImageView) playerToolbar.findViewById(R.id.nextSongToolbar);
+        btnNextSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "next song", Toast.LENGTH_SHORT).show();
+            }
+        });
+        playerToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "TOOLBAR TOAST", Toast.LENGTH_SHORT).show();
+            }
+        });
         //Manda a musica para o FragmentNowPlaying
-        PlayerMainFragment playerMainFragment = new PlayerMainFragment();
+        /*PlayerMainFragment playerMainFragment = new PlayerMainFragment();
         Bundle b = new Bundle();
         b.putInt(PlayerTabsAdapter.currentSongPositionName, position);
 
@@ -91,7 +130,7 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, nowPlayingFragment).commit();
        // TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
-        //tabLayout.getTabAt(2).select();
+        //tabLayout.getTabAt(2).select(); */
 
     }
 

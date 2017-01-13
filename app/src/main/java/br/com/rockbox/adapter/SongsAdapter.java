@@ -56,13 +56,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
     public void onBindViewHolder(SongsAdapter.SongsViewHolder holder, int position) {
         holder.songNameRow.setText(songs.get(position).getTitle());
         holder.artistRow.setText(songs.get(position).getArtist());
-        holder.durationRow.setText(convertMusicDuration(songs.get(position).getFinalTime()));
+        //Aqui deve ser feita uma formatação pelo tamanho da música
 
         //albumArtwork
         Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
                 songs.get(position).getAlbumID());
         //Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").placeholder(R.drawable.ic_play).into(holder.imageRow);
-        Picasso.with(context).load(uri).placeholder(R.drawable.ic_play_pause_24dp).into(holder.imageRow);
+        Picasso.with(context).load(uri).placeholder(R.drawable.generic_album_cover).into(holder.imageRow);
 
 
     }
@@ -93,10 +93,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         @BindView(R.id.songNameRow)
         TextView songNameRow;
 
-        @BindView(R.id.durationRow)
-        TextView durationRow;
-
-        @BindView(R.id.imageRow)
+        @BindView(R.id.songImageRow)
         ImageView imageRow;
 
         public SongsViewHolder(View itemView) {

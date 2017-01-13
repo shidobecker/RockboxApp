@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppBarOverlay">
+
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -33,7 +36,108 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/playerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:elevation="5dp"
+        android:background="@color/grey94"
+        android:layout_gravity="bottom"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/generic_album_cover"
+                android:id="@+id/playerAlbumCoverToolbar"/>
+
+
+            <TextView
+                android:layout_marginBottom="4dp"
+                android:text="Song Name"
+                android:layout_marginRight="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerSongNameToolbar"
+                android:layout_gravity="end"
+                android:textColor="#3A3C3C"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/playerAlbumCoverToolbar"/>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="21dp">
+
+
+                <ImageView
+                    android:tint="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_previous_toolbar"
+                    android:layout_marginStart="46dp"
+                    android:id="@+id/previousSongToolbar"
+                    android:layout_toEndOf="@+id/playerSongNameToolbar"/>
+
+                <ImageView
+                    android:tint="@color/black"
+                    android:layout_alignBaseline="@+id/previousSongToolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_pause_toolbar"
+                    android:id="@+id/pausePlayToolbar"
+                    android:layout_alignTop="@+id/previousSongToolbar"
+                    android:layout_toEndOf="@+id/previousSongToolbar"
+                    android:layout_marginStart="11dp"/>
+
+                <ImageView
+                    android:tint="@color/black"
+                    android:layout_alignBaseline="@id/pausePlayToolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_next_toolbar"
+                    android:layout_marginStart="11dp"
+                    android:id="@+id/nextSongToolbar"
+                    android:layout_alignTop="@+id/pausePlayToolbar"
+                    android:layout_toEndOf="@+id/pausePlayToolbar"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:text="Artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerArtistToolbar"
+                android:layout_gravity="end"
+                android:textColor="#3A3C3C"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/playerSongNameToolbar"
+                android:layout_alignStart="@+id/playerSongNameToolbar"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

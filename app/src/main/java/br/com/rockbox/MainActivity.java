@@ -1,6 +1,5 @@
 package br.com.rockbox;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
@@ -12,14 +11,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.Transition;
 import android.transition.Visibility;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,15 +30,13 @@ import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.fragments.BandListFragment;
 import br.com.rockbox.fragments.CalendarFragment;
 import br.com.rockbox.fragments.MainFragment;
-import br.com.rockbox.fragments.NowPlayingFragment;
-import br.com.rockbox.fragments.PlayerMainFragment;
+import br.com.rockbox.fragments.SongListFragment;
 import br.com.rockbox.model.User;
 import br.com.rockbox.service.MusicPlayerService;
 import br.com.rockbox.utils.GlobalConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,6 +68,9 @@ public class MainActivity extends AppCompatActivity
     //Handler para atualizar o tempo de musica.
     private Handler myHandler = new Handler();;
 
+
+    @BindView(R.id.playerToolbar)
+    Toolbar playerToolbar;
 
 
 
@@ -140,12 +134,19 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public Toolbar getPlayerToolbar() {
+        return playerToolbar;
+    }
 
-
+    public void setPlayerToolbar(Toolbar playerToolbar) {
+        this.playerToolbar = playerToolbar;
+    }
 
     private void setUpToolbar(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+        playerToolbar.setVisibility(View.GONE);
     }
 
     private void setUpNavigationDrawer(){
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity
 
             case GlobalConstants.PlayerMainFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
-                fragmentTransaction.replace(R.id.mainFrameLayout, new PlayerMainFragment());
+                fragmentTransaction.replace(R.id.mainFrameLayout, new SongListFragment());
                 createServiceConnection();
                 Intent mIntent = new Intent(this, MusicPlayerService.class);
                 bindService(mIntent, serviceConnection, BIND_AUTO_CREATE);
@@ -321,5 +322,12 @@ public class MainActivity extends AppCompatActivity
 
     public MusicPlayerService getMusicPlayerService() {
         return musicPlayerService;
+    }
+    public void setToolbar(Toolbar toolbar) {
+        this.toolbar = toolbar;
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 }
