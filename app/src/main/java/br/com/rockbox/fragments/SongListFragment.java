@@ -33,6 +33,7 @@ import br.com.rockbox.adapter.SongsRecyclerViewClickListener;
 import br.com.rockbox.model.Song;
 import br.com.rockbox.utils.GlobalConstants;
 import br.com.rockbox.utils.OverlapDecoration;
+import br.com.rockbox.utils.StringFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -53,8 +54,6 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
     private RecyclerView.LayoutManager layoutManager;
 
     private Toolbar playerToolbar;
-
-    ImageView btnNextSong;
 
     public SongListFragment() {
     }
@@ -90,32 +89,13 @@ public class SongListFragment extends Fragment implements SongsRecyclerViewClick
 
     //Transformar a Toolbar num singleton para ser acessada de todos os Fragments e Services.
     @Override
-    public void recyclerViewListClicked(View v, int position) {
+    public void recyclerViewListClicked(View v, final int position) {
         adapter =  new SongsAdapter(getActivity(), songs, this);
         //Pegando a musica que foi clicada a partir da posição do this.getLayoutPosition() do SongsAdapter
         Song selectedSong  = songs.get(position);
-        Log.i(GlobalConstants.SONG_LIST_FRAGMENT_TAG, String.valueOf(selectedSong.getTitle()));
-        playerToolbar.setVisibility(View.VISIBLE);
-        ((TextView)playerToolbar.findViewById(R.id.playerSongNameToolbar)).setText(selectedSong.getTitle());
-        ((TextView)playerToolbar.findViewById(R.id.playerArtistToolbar)).setText(selectedSong.getArtist());
-        Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
-                selectedSong.getAlbumID());
-        Picasso.with(v.getContext()).load(uri).placeholder(R.drawable.generic_album_cover)
-                .into((ImageView)playerToolbar.findViewById(R.id.playerAlbumCoverToolbar));
-
-        btnNextSong = (ImageView) playerToolbar.findViewById(R.id.nextSongToolbar);
-        btnNextSong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "next song", Toast.LENGTH_SHORT).show();
-            }
-        });
-        playerToolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "TOOLBAR TOAST", Toast.LENGTH_SHORT).show();
-            }
-        });
+        GlobalConstants.currentSongPosition = position;
+        GlobalConstants.currentSong = songs.get(position);
+        ((MainActivity)getActivity()).configurePlayerToolbar(View.VISIBLE);
         //Manda a musica para o FragmentNowPlaying
         /*PlayerMainFragment playerMainFragment = new PlayerMainFragment();
         Bundle b = new Bundle();

@@ -1,13 +1,138 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="br.com.rockbox.fragments.SongListFragment">
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/ebony"
+                                             tools:context=".MainActivity"
+                                             android:layout_marginTop="?attr/actionBarSize"
+                                             xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/generic_album_cover"
+        android:src="@drawable/generic_album_cover"
+        android:id="@+id/albumCoverNowPlaying"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="114dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Now Playing"/>
+        android:text="Song Title"
+        android:textSize="@dimen/material_component_cards_primary_title_top_padding"
+        android:textColor="@color/ivory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/songTitleNowPlaying"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
-</FrameLayout>
+    <TextView
+        android:text="TextView"
+        android:textColor="@color/ivory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/songArtistNowPlaying"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/songTitleNowPlaying"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:text="0:00"
+        android:textColor="@color/ivory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/currentTimeNowPlaying"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/albumCoverNowPlaying"
+        app:layout_constraintHorizontal_bias="0.11"/>
+
+    <TextView
+        android:text="5:00"
+        android:textColor="@color/ivory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finalTimeNowPlaying"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/albumCoverNowPlaying"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <SeekBar
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarNowPlaying"
+        app:layout_constraintBottom_toBottomOf="@+id/currentTimeNowPlaying"
+        app:layout_constraintTop_toTopOf="@+id/currentTimeNowPlaying"
+        app:layout_constraintRight_toLeftOf="@+id/finalTimeNowPlaying"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/currentTimeNowPlaying"
+        android:layout_width="200dp"/>
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_previous_toolbar"
+        android:id="@+id/btnPreviousNowPlaying"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/currentTimeNowPlaying"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_play_toolbar"
+        android:id="@+id/btnPlayNowPlaying"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeNowPlaying"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/btnPreviousNowPlaying"
+        app:layout_constraintRight_toLeftOf="@+id/btnNextNowPlaying"
+        android:layout_marginEnd="8dp"
+        />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_next_toolbar"
+        android:id="@+id/btnNextNowPlaying"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeNowPlaying"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="20dp"
+        tools:layout_editor_absoluteX="0dp"/>
+
+</android.support.constraint.ConstraintLayout>

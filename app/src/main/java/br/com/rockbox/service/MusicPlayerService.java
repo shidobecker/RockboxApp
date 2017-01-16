@@ -144,7 +144,14 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnPrepare
         cur.close();
     }
 
+    public void nextSong(){
+        //Uri uri = Uri.parse(selectedMusic.getUri());
 
+    }
+    public void previousSong(){
+       // Uri uri = Uri.parse(selectedMusic.getUri());
+
+    }
 
 
 }

@@ -2,6 +2,7 @@ package br.com.rockbox.fragments;
 
 import android.app.Fragment;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -16,7 +17,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,6 +37,9 @@ import br.com.rockbox.adapter.PlayerTabsAdapter;
 import br.com.rockbox.model.Song;
 import br.com.rockbox.service.MusicPlayerService;
 import br.com.rockbox.utils.GlobalConstants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class NowPlayingFragment extends Fragment {
@@ -34,26 +49,30 @@ public class NowPlayingFragment extends Fragment {
     private int currentSongPosition;
     private List<Song> globalSongs;
 
-    public NowPlayingFragment() {
-        //Pegando a currentSongPosition pelo bundle enviada pelo PageTabsAdapter
-        if(getArguments()!=null) {
-            currentSongPosition = getArguments().getInt(PlayerTabsAdapter.currentSongPositionName, -1);
-            Log.i("Now Playing Fragment: ", String.valueOf(currentSongPosition));
-        }
-        //Pegando a musica a partir da position
-        if(currentSongPosition != -1) {
-            currentSong = GlobalConstants.globalSongs.get(currentSongPosition);
-            Log.i("Now Playing Fragment: ", String.valueOf(currentSongPosition));
 
-        }
+    @BindView(R.id.songTitleNowPlaying)
+    TextView songTitle;
+    @BindView(R.id.songArtistNowPlaying)
+    TextView songArtist;
+    @BindView(R.id.albumCoverNowPlaying)
+    CircleImageView albumCover;
+    @BindView(R.id.btnPreviousNowPlaying)
+    ImageButton btnPrevious;
+    @BindView(R.id.btnPlayNowPlaying)
+    ImageButton btnPlay;
+    @BindView(R.id.btnNextNowPlaying)
+    ImageButton btnNext;
+    @BindView(R.id.seekBarNowPlaying)
+    SeekBar seekBar;
+
+
+    public NowPlayingFragment() {
+
     }
 
 
     @Override
     public void onStart() {
-        if(currentSong!=null){
-            //Toast.makeText(getActivity(), "Song: " + currentSong.getTitle(), Toast.LENGTH_SHORT).show();
-        }
         super.onStart();
     }
 
@@ -63,16 +82,28 @@ public class NowPlayingFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Bundle b = getArguments();
+        int position = b.getInt(GlobalConstants.SONGPOSITION);
+        currentSong = GlobalConstants.globalSongs.get(position);
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_now_playing, container, false);
+
+        ButterKnife.bind(this, view);
+        Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
+                currentSong.getAlbumID());
+        Picasso.with(container.getContext()).load(uri).placeholder(R.drawable.generic_album_cover)
+                .into(albumCover);
+        songTitle.setText(currentSong.getTitle());
+        songArtist.setText(currentSong.getArtist());
+        Animation a = AnimationUtils.loadAnimation(container.getContext(), R.anim.rotate_anim);
+        a.setRepeatCount(Animation.INFINITE);
+        albumCover.startAnimation(a);
         return view;
     }
 

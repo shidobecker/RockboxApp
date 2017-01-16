@@ -3,11 +3,13 @@ package br.com.rockbox;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -23,17 +25,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import br.com.rockbox.dao.UserDAO;
 import br.com.rockbox.fragments.BandListFragment;
 import br.com.rockbox.fragments.CalendarFragment;
 import br.com.rockbox.fragments.MainFragment;
+import br.com.rockbox.fragments.NowPlayingFragment;
 import br.com.rockbox.fragments.SongListFragment;
+import br.com.rockbox.model.Song;
 import br.com.rockbox.model.User;
 import br.com.rockbox.service.MusicPlayerService;
 import br.com.rockbox.utils.GlobalConstants;
+import br.com.rockbox.utils.StringFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -69,8 +80,21 @@ public class MainActivity extends AppCompatActivity
     private Handler myHandler = new Handler();;
 
 
+    //Views do Player Toolbar
     @BindView(R.id.playerToolbar)
     Toolbar playerToolbar;
+    @BindView(R.id.playerSongNameToolbar)
+    TextView playerSongNameToolbar;
+    @BindView(R.id.playerAlbumCoverToolbar)
+    ImageView playerAlbumCoverToolbar;
+    @BindView(R.id.playerArtistToolbar)
+    TextView playerArtistToolbar;
+    @BindView(R.id.previousSongToolbar)
+    ImageButton playerPreviousToolbar;
+    @BindView(R.id.pausePlayToolbar)
+    ImageButton playerPausePlayToolbar;
+    @BindView(R.id.nextSongToolbar)
+    ImageButton playerNextToolbar;
 
 
 
@@ -118,7 +142,6 @@ public class MainActivity extends AppCompatActivity
         //Conexão com o service para poder acessar os metodos do mesmo
          serviceConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Toast.makeText(MainActivity.this, "Service is Connected", Toast.LENGTH_SHORT).show();
                 musicBound = true;
                 MusicPlayerService.MusicBinder mLocalBinder = (MusicPlayerService.MusicBinder)service;
                 musicPlayerService = mLocalBinder.getServerInstance();
@@ -191,16 +214,19 @@ public class MainActivity extends AppCompatActivity
         switch (FragmentType){
             case GlobalConstants.CalendarFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.addToBackStack(GlobalConstants.CALENDAR_FRAGMENT_TAG);
                 fragmentTransaction.replace(R.id.mainFrameLayout, new CalendarFragment());
                 break;
 
             case GlobalConstants.MainFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.addToBackStack(GlobalConstants.MAIN_FRAGMENT_TAG);
                 fragmentTransaction.replace(R.id.mainFrameLayout, new MainFragment());
                 break;
 
             case GlobalConstants.PlayerMainFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.addToBackStack(GlobalConstants.SONG_LIST_FRAGMENT_TAG);
                 fragmentTransaction.replace(R.id.mainFrameLayout, new SongListFragment());
                 createServiceConnection();
                 Intent mIntent = new Intent(this, MusicPlayerService.class);
@@ -213,11 +239,43 @@ public class MainActivity extends AppCompatActivity
 
             case GlobalConstants.BandListFragment:
                 fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in );
+                fragmentTransaction.addToBackStack(GlobalConstants.BAND_LIST_FRAGMENT_TAG);
                 fragmentTransaction.replace(R.id.mainFrameLayout, new BandListFragment());
                 break;
+
         }
         fragmentTransaction.commit();
     }
+
+
+    public void configurePlayerToolbar(int viewVisibility) {
+        playerSongNameToolbar.setText(StringFormat.formatString(GlobalConstants.currentSong.getTitle()));
+        playerArtistToolbar.setText(StringFormat.formatString(GlobalConstants.currentSong.getArtist()));
+
+        Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
+                GlobalConstants.currentSong.getAlbumID());
+        Picasso.with(this).load(uri).placeholder(R.drawable.generic_album_cover)
+                .into(playerAlbumCoverToolbar);
+        playerToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+                Bundle b = new Bundle();
+                b.putInt(GlobalConstants.SONGPOSITION, GlobalConstants.currentSongPosition);
+                nowPlayingFragment.setArguments(b);
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_out, R.animator.fade_in);
+                fragmentTransaction.addToBackStack(GlobalConstants.NOW_PLAYING_FRAGMENT_TAG);
+                fragmentTransaction.replace(R.id.mainFrameLayout, nowPlayingFragment);
+                fragmentTransaction.commit();
+
+            }
+        });
+        playerToolbar.setVisibility(viewVisibility);
+
+
+    }
+
 
 
 

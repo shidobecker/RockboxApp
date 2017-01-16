@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import br.com.rockbox.R;
 import br.com.rockbox.model.Song;
 import br.com.rockbox.utils.GlobalConstants;
+import br.com.rockbox.utils.StringFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -56,7 +57,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
     public void onBindViewHolder(SongsAdapter.SongsViewHolder holder, int position) {
         holder.songNameRow.setText(songs.get(position).getTitle());
         holder.artistRow.setText(songs.get(position).getArtist());
-        //Aqui deve ser feita uma formatação pelo tamanho da música
+
 
         //albumArtwork
         Uri uri = ContentUris.withAppendedId(GlobalConstants.sArtworkUri,
@@ -105,7 +106,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         @Override
         public void onClick(View v) {
             itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
-            Toast.makeText(v.getContext(), "Position Clicked: "+ this.getLayoutPosition(), Toast.LENGTH_SHORT).show();
         }
     }
 

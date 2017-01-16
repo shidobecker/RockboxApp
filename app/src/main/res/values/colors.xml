@@ -13,6 +13,9 @@
     <color name ="grey9">#171717</color>
     <color name ="grey87">#DEDEDE</color>
     <color name="grey94">#F0F0F0</color>
+    <color name="ebony">#2D2F32</color>
+    <color name="ivory">#F8F8F6</color>
+    <color name="taupe_grey">#928A8E</color>
 
     <!-- 500 - For Primary color -->
     <color name="red_500">#f44336</color>

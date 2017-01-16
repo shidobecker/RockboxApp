@@ -9,6 +9,7 @@ import br.com.rockbox.MainActivity;
 import br.com.rockbox.SplashActivity;
 import br.com.rockbox.fragments.BandListFragment;
 import br.com.rockbox.fragments.CalendarFragment;
+import br.com.rockbox.fragments.MainFragment;
 import br.com.rockbox.fragments.NowPlayingFragment;
 import br.com.rockbox.fragments.SongListFragment;
 import br.com.rockbox.model.Song;
@@ -25,6 +26,7 @@ public class GlobalConstants {
     public static final String LOGIN_ACTIVITY_TAG = LoginActivity.class.getSimpleName();
     public static final String SPLASH_ACTIVITY_TAG = SplashActivity.class.getSimpleName();
     //Fragment Names
+    public static final String MAIN_FRAGMENT_TAG = br.com.rockbox.fragments.MainFragment.class.getSimpleName();
     public static final String SONG_LIST_FRAGMENT_TAG = SongListFragment.class.getSimpleName();
     public static final String NOW_PLAYING_FRAGMENT_TAG = NowPlayingFragment.class.getSimpleName();
     public static final String CALENDAR_FRAGMENT_TAG = br.com.rockbox.fragments.CalendarFragment.class.getSimpleName();
@@ -40,11 +42,17 @@ public class GlobalConstants {
     public static final int PlayerMainFragment = 2;
     public static final int UserSongsFragment = 3;
     public static final int BandListFragment = 4;
+    public static final int NowPlayingFragment = 5;
 
 
 
     //Lista de Musica para não haja necessidade de sempre ser carregada.
     public static List<Song> globalSongs;
+    public static int currentSongPosition;
+    public static Song currentSong;
+
+    public static final String SONGPOSITION = "SONG_POSITION";
+
 
     //Artwork do Album
     final public static Uri sArtworkUri = Uri
