@@ -127,6 +127,10 @@ class LoginActivity : AppCompatActivity(){
         }
     }
 
+
+    //TODO: passar a conexão com a url para outra classe
+    //TODO: passar a conexão para volley ou retrofit
+    //TODO: adicionar progress bar em diversos pontos
     inner class UserLoginTask internal constructor(private val username: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
